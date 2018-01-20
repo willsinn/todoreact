@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ProjectItem from './ProjectItem';
+import { deleteProject } from '../Actions/projects';
 
 
 class Projects extends Component {
   deleteProject(id){
-    this.props.onDelete(id);
+    this.props.deleteProject(id);
   }
 
 
@@ -26,13 +28,12 @@ class Projects extends Component {
     let projectItems;
     if(this.props.projects){
       projectItems = this.props.projects.map(project => {
-
         return (
           <ProjectItem onDelete={this.deleteProject.bind(this)} key={project.title} project={project} />
         );
       });
     }
-
+    console.log('projectItems', projectItems);
     return (
       <div className="Projects">
         <h3 style={listHeaderStyle}>Projects in Progress</h3>
@@ -41,6 +42,19 @@ class Projects extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  console.log('state', state);
+  return {
+    projects: state.todo.projects
+  }
+};
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteProject: (id) => {
+      dispatch(deleteProject(id));
+    }
+  }
+};
 
-export default Projects;
+export default connect(mapStateToProps, mapDispatchToProps)(Projects);

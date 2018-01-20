@@ -11,7 +11,7 @@ class AddProject extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    projectItem: state.store['project_1']
+    // projectItem: state.store['project_1']
   }
 }
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuid from 'uuid';
 import Projects from './Components/Projects';
 import AddProject from './Components/AddProject';
 import CurrentDate from './Components/CurrentDate';
@@ -7,46 +6,6 @@ import CurrentDate from './Components/CurrentDate';
 import './App.css';
 
 class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      projects: []
-    }
-  }
-
-
-  getProjects(){
-    this.setState({projects:[
-        {
-          id:uuid.v4(),
-          title: 'Portfolio Website',
-          category: 'Web Design'
-        },
-        {
-          id:uuid.v4(),
-          title: 'Calculator App',
-          category: 'Mobile Development'
-        },
-        {
-          id:uuid.v4(),
-          title: 'Ecommerce Shopping Cart',
-          category: 'Web Development'
-        }
-   ]});
-  }
-
-  componentWillMount(){      //Life Cycle
-   this.getProjects();
-  }
-
-
-
-  handleAddProject(project){
-    let projects = this.state.projects;
-    projects.push(project);
-    this.setState({projects:projects});
-  }
-
   handleDeleteProject(id){
     let projects = this.state.projects;
     let index = projects.findIndex(x => x.id === id);
@@ -80,11 +39,11 @@ class App extends Component {
     return (
 
       <div className="App" style={appStyle}>
-        <CurrentDate date={this.state.date} />
+        <CurrentDate date={new Date()} />
         <h1 style={headerStyle}> To-Do Coding Projects </h1>
         <br />
-        <AddProject addProject={this.handleAddProject.bind(this)}/>
-        <Projects projects={this.state.projects} onDelete={this.handleDeleteProject.bind(this)} />
+        <AddProject />
+        <Projects />
       </div>
 
 

@@ -1,38 +1,28 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
-
+import { addProject } from '../Actions/projects';
+import { connect } from 'react-redux';
 
 
 class AddProject extends Component {
-  constructor(){
-    super();
-    this.state = {
-      newProject:{}
-    }
-  }
   static defaultProps = {
     categories: ['Web Design', 'Web Development', 'Mobile Development']
   }
 
-
-
   handleSubmit(e){
+    e.preventDefault(); //prevents reset so value can be pushed
     if(this.refs.title.value === ''){
       alert('Project title is Required!');
     } else {
-      this.setState({newProject:{
+      this.props.addProject({
         id:uuid.v4(),
         title: this.refs.title.value,
         category: this.refs.category.value
-      }}, function(){
-        //console.log(this.state);
-        this.props.addProject(this.state.newProject);
       });
     }
-    e.preventDefault(); //prevents reset so value can be pushed
+
     this.refs.title.value = ''; //resets textbox
   }
-
 
   render() {
   /*  var divStyle = {
@@ -94,4 +84,12 @@ class AddProject extends Component {
   }
 }
 
-export default AddProject;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProject: (project) => {
+      dispatch(addProject(project));
+    }
+  }
+};
+
+export default connect(false, mapDispatchToProps)(AddProject);
