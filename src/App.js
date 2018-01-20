@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import uuid from 'uuid';
 import Projects from './Components/Projects';
 import AddProject from './Components/AddProject';
+import CurrentDate from './Components/CurrentDate';
+// import ProjectItemContainer from '../Containers/ProjectItemContainer';
 import './App.css';
 
 class App extends Component {
@@ -12,7 +14,8 @@ class App extends Component {
     }
   }
 
-  componentWillMount(){      //Life Cycle
+
+  getProjects(){
     this.setState({projects:[
         {
           id:uuid.v4(),
@@ -32,6 +35,12 @@ class App extends Component {
    ]});
   }
 
+  componentWillMount(){      //Life Cycle
+   this.getProjects();
+  }
+
+
+
   handleAddProject(project){
     let projects = this.state.projects;
     projects.push(project);
@@ -46,14 +55,39 @@ class App extends Component {
   }
 
 
+
   render() {
+    var headerStyle = {
+      fontFamily: 'Times',
+      textAlign: 'center',
+      textDecoration: 'overline',
+      margin: '0',
+      fontSize: '40px',
+      paddingTop: '10px',
+      textShadow: '-1px 0 #ff4d4d, 0 1px #ff4d4d, 1px 0 #ff4d4d, 0 -1px #ff4d4d',
+
+    };
+
+    var appStyle = {
+      borderRadius: '45px',
+      backgroundColor: ' #b3ffff',
+      display: 'inline-block',
+      border: '3px solid #800000',
+      padding: '15px 15px 35px 15px'
+
+    };
+
     return (
 
-      <div className="App">
-        <h1> Coding Project ToDo </h1>
+      <div className="App" style={appStyle}>
+        <CurrentDate date={this.state.date} />
+        <h1 style={headerStyle}> To-Do Coding Projects </h1>
+        <br />
         <AddProject addProject={this.handleAddProject.bind(this)}/>
         <Projects projects={this.state.projects} onDelete={this.handleDeleteProject.bind(this)} />
       </div>
+
+
     );
   }
 }
